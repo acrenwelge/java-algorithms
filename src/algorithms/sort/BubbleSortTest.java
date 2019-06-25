@@ -2,7 +2,7 @@ package algorithms.sort;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class BubbleSortTest {
 

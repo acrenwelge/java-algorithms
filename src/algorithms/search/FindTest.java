@@ -4,11 +4,11 @@ import static algorithms.search.Find.findMissing;
 import static algorithms.search.Find.findPairs;
 import static algorithms.search.Find.findPairs2;
 import static algorithms.search.Find.findSmallestAndLargest;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.fail;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class FindTest {
 
