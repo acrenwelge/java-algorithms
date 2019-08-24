@@ -13,7 +13,7 @@ public class Graph {
 	
 	public Graph(int numNodes) {
 		for (int i=0; i<numNodes; i++) {
-			adjNodes.put(new Node(), new LinkedList<>());
+			adjNodes.put(new Node(), new LinkedList<Node>());
 		}
 	}
 	
@@ -22,7 +22,7 @@ public class Graph {
 	}
 	
 	void addNode(Node n) {
-		adjNodes.putIfAbsent(n, new LinkedList<>());
+		adjNodes.putIfAbsent(n, new LinkedList<Node>());
 	}
 	
 	void removeNode(Node n) {
