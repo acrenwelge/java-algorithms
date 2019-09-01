@@ -9,7 +9,7 @@ Implement a job scheduler which takes in a function f and an integer n, and call
  * @author Andrew
  *
  */
-public class Ten {
+public class Scheduler {
 	
 	public void scheduler(Runnable f, int n) {
 		Runnable wait = () -> {

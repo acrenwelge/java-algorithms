@@ -14,7 +14,7 @@ Given the root to a binary tree, count the number of unival subtrees.
 For example, the following tree has 5 unival subtrees:
  * @author Andrew
  */
-public class Eight {
+public class CountUnivalSubtrees {
 	
 	static class Node {
 		int val;

@@ -15,7 +15,7 @@ Follow-up: Can you do this in O(N) time and constant space?
  * @author Andrew
  *
  */
-public class Nine {
+public class LargestSumNonAdjacentNumbers {
 	
 	/**
 	 * Approach:

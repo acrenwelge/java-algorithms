@@ -9,7 +9,7 @@ package problems.hard;
  * @author Andrew
  *
  */
-public class Six {
+public class XORLinkedList {
 	static class Node {
 		int both;
 		Node(int b) {

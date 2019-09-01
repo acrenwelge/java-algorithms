@@ -21,7 +21,7 @@ You can modify the input array in-place.
  * @author Andrew
  *
  */
-public class Four {
+public class FindMissingInt {
 	
 	// does not conform to linear time / constant space
 	public int naiveSolution(int[] arr) {

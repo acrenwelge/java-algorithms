@@ -18,7 +18,8 @@ Given the root to a binary tree, implement serialize(root), which serializes the
  * @author Andrew
  * Solution algorithm: depth-first (NLR)
  */
-public class Three {
+public class SerializeBinaryTree {
+
 	static final String delim = ",";
 	static final String nullVal = "null";
 	

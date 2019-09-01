@@ -15,7 +15,7 @@ Follow-up: what if you can't use division?
  * @author Andrew
  *
  */
-public class Two {
+public class ArrayManipulate {
 	int[] input;
 	int[] output;
 	

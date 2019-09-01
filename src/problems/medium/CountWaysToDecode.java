@@ -15,7 +15,7 @@ You can assume that the messages are decodable. For example, '001' is not allowe
  * @author Andrew
  *
  */
-public class Seven {
+public class CountWaysToDecode {
 	
 	/** Approach:
 	 * Attempt 1:
