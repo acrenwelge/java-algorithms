@@ -1,4 +1,4 @@
-package ocp;
+package ocp.datetime;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -6,13 +6,13 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class DateTimeDriver {
+public class DateTimeLocalization {
 	
 	static LocalDate ld;
 	static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		DateTimeDriver dtd = new DateTimeDriver();
+		DateTimeLocalization dtd = new DateTimeLocalization();
 		while (true) {
 			dtd.runProgram();
 		}

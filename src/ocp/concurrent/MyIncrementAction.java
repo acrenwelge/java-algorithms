@@ -1,8 +1,8 @@
-package ocp;
+package ocp.concurrent;
 
 import java.util.concurrent.RecursiveAction;
 
-public class MyAction extends RecursiveAction {
+public class MyIncrementAction extends RecursiveAction {
 	
 	static final int MAX = 100;
 	int[] arr;
@@ -14,17 +14,17 @@ public class MyAction extends RecursiveAction {
 	protected void compute() {
 		// increment elements of array
 		if (high - low <= MAX) {
-			for (int i=0;i<arr.length;i++) arr[i]++;
+			for (int i=low;i<high;i++) arr[i]++;
 		} else {
 			int mid = low + (high - low) / 2;
-			MyAction left = new MyAction(arr, low, mid);
-			MyAction right = new MyAction(arr, mid, high);
+			MyIncrementAction left = new MyIncrementAction(arr, low, mid);
+			MyIncrementAction right = new MyIncrementAction(arr, mid, high);
 			right.compute();
-			left.fork().join();
+			left.compute();
 		}
 	}
 	
-	public MyAction(int[] arr, int low, int high) {
+	public MyIncrementAction(int[] arr, int low, int high) {
 		this.arr = arr;
 		this.low = low;
 		this.high = high;
@@ -32,7 +32,7 @@ public class MyAction extends RecursiveAction {
 	
 	public static void main(String[] args) {
 		int[] arr = new int[] {1,5,2,3,-5};
-		new MyAction(arr,0,5).compute();
+		new MyIncrementAction(arr,0,arr.length).compute();
 		for (int i : arr) {
 			System.out.println(i);
 		}

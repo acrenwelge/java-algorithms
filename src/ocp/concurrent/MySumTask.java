@@ -1,8 +1,8 @@
-package ocp;
+package ocp.concurrent;
 
 import java.util.concurrent.RecursiveTask;
 
-public class MyTask extends RecursiveTask<Integer> {
+public class MySumTask extends RecursiveTask<Integer> {
 	
 	public static final int THRESHOLD = 3;
 	public int[] arr;
@@ -19,13 +19,13 @@ public class MyTask extends RecursiveTask<Integer> {
 			return sum;
 		} else {
 			int mid = low + (high-low)/2;
-			int left = new MyTask(arr,low,mid).compute();
-			int right = new MyTask(arr,mid,high).compute();
+			int left = new MySumTask(arr,low,mid).compute();
+			int right = new MySumTask(arr,mid,high).compute();
 			return left + right;
 		}
 	}
 	
-	MyTask(int[] arr, int low, int high) {
+	MySumTask(int[] arr, int low, int high) {
 		this.arr = arr;
 		this.low = low;
 		this.high = high;
@@ -33,7 +33,7 @@ public class MyTask extends RecursiveTask<Integer> {
 	
 	public static void main(String[] args) {
 		int[] arr = new int[] {1,6,2,0,4};
-		Integer sum = new MyTask(arr,0,5).compute();
+		Integer sum = new MySumTask(arr,0,5).compute();
 		System.out.println(sum);
 	}
 
