@@ -11,7 +11,8 @@ import java.util.stream.Stream;
 
 public class ReadWriteFile {
 	
-	public static final String filePath = "TESTFILE.txt";
+	public static final String writeToPath = "TESTFILE.txt";
+	public static final String readFromPath = "README.md";
 
 	public static void main(String[] args) {
 		try {
@@ -25,8 +26,8 @@ public class ReadWriteFile {
 	
 	public static void readFile() throws IOException {
 		// readAllLines returns list, lines returns stream
-		List<String> lines = Files.readAllLines(Paths.get("README.md"));
-		Stream<String> streamFile = Files.lines(Paths.get("README.md"));
+		List<String> lines = Files.readAllLines(Paths.get(readFromPath));
+		Stream<String> streamFile = Files.lines(Paths.get(readFromPath));
 		lines.forEach(System.out::print);
 		System.out.println();
 		double count = lines.stream()
@@ -38,12 +39,12 @@ public class ReadWriteFile {
 	}
 	
 	public static void writeFile() throws IOException {
-		BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardOpenOption.CREATE);
+		BufferedWriter writer = Files.newBufferedWriter(Paths.get(writeToPath), StandardOpenOption.CREATE);
 		writer.append("First line");
 		writer.newLine();
 		writer.append("Second line");
 		writer.close();
-		BufferedReader reader = Files.newBufferedReader(Paths.get(filePath));
+		BufferedReader reader = Files.newBufferedReader(Paths.get(writeToPath));
 		String s = null;
 		while ((s = reader.readLine()) != null) {
 			System.out.println(s);
@@ -51,6 +52,6 @@ public class ReadWriteFile {
 	}
 	
 	public static void deleteFile() throws IOException {
-		Files.deleteIfExists(Paths.get(filePath));
+		Files.deleteIfExists(Paths.get(writeToPath));
 	}
 }

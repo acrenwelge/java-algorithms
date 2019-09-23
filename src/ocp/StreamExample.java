@@ -6,10 +6,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class StreamExample {
-
 	public static void main(String[] args) {
 		generalStreams();
-        primitiveStreams();
+		primitiveStreams();
 	}
 
 	public static void generalStreams() {
