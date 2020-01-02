@@ -1,5 +1,8 @@
 package problems.medium;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -11,19 +14,19 @@ import org.junit.Test;
 /**
  * This problem was asked by Palantir.
 
-Write an algorithm to justify text. Given a sequence of words and an integer line length k, 
+Write an algorithm to justify text. Given a sequence of words and an integer line length k,
 return a list of strings which represents each line, fully justified.
 
-More specifically, you should have as many words as possible in each line. 
-There should be at least one space between each word. Pad extra spaces when necessary 
-so that each line has exactly length k. Spaces should be distributed as equally as possible, 
+More specifically, you should have as many words as possible in each line.
+There should be at least one space between each word. Pad extra spaces when necessary
+so that each line has exactly length k. Spaces should be distributed as equally as possible,
 with the extra spaces, if any, distributed starting from the left.
 
 If you can only fit one word on a line, then you should pad the right-hand side with spaces.
 
 Each word is guaranteed not to be longer than k.
 
-For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] 
+For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]
 and k = 16, you should return the following:
 
 ["the  quick brown", # 1 extra space on the left
@@ -33,9 +36,10 @@ and k = 16, you should return the following:
  *
  */
 public class JustifyText {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	static final String SPACE = " ";
-	
+
 	/*
 	 * Approach:
 	 *  - join words until line limit is reached
@@ -68,7 +72,7 @@ public class JustifyText {
 		}
 		return lines;
 	}
-	
+
 	private static String padLine(StringBuilder line, int lineLength) {
 		int idx = 0;
 		int iter = 1;
@@ -82,28 +86,28 @@ public class JustifyText {
 			line.insert(idx, SPACE);
 			idx += iter+1;
 		}
-		System.out.println(line);
+		log.debug(line);
 		return line.toString();
 	}
-	
+
 	@Test
 	public void defaultTest() {
 		List<String> answer = new ArrayList<>();
 		answer.add("the  quick brown");
 		answer.add("fox  jumps  over");
 		answer.add("the   lazy   dog");
-		assertEquals(answer, justifyText(new String[] 
+		assertEquals(answer, justifyText(new String[]
 				{"the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"},
 				16));
 	}
-	
+
 	@Test
 	public void customTest() {
 		List<String> answer = new ArrayList<>();
 		answer.add("A long time ago");
 		answer.add("in a galaxy far");
 		answer.add("far        away");
-		assertEquals(answer, justifyText(new String[] 
+		assertEquals(answer, justifyText(new String[]
 				{"A", "long", "time", "ago", "in", "a", "galaxy", "far", "far", "away"},
 				15));
 	}

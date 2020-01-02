@@ -1,5 +1,8 @@
 package ocp.io;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -26,67 +29,68 @@ import java.util.stream.Stream;
  *   - provide the new name
  * (f) delete the file or directory
  *   - ask to delete recursively
- *   - ask to delete if not empty 
+ *   - ask to delete if not empty
  * @author Andrew
  *
  */
 public class ManipulateFilesExample {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	public static final Scanner sc = new Scanner(System.in);
-	
+
 	static final Path currentDir = Paths.get("");
-	
+
 	public static void main(String[] args) {
 	  while(true) {
 		  try {
 			int choice = printMenu();
 			int choiceOpt = 1;
 		  	if (choice == choiceOpt) {
-		  		System.out.println("List recursively? (y/n)");
+		  		log.debug("List recursively? (y/n)");
 		  		String input = sc.nextLine();
 		  		if (input.equalsIgnoreCase("y")) {
 		  			Files.walk(currentDir).forEachOrdered(System.out::println);
 		  		} else {
 		  			Stream<Path> paths = Files.list(currentDir);
-		  			paths.forEachOrdered((p) -> System.out.println(p.getFileName()));
+		  			paths.forEachOrdered((p) -> log.debug(p.getFileName()));
 		  			paths.close();
 		  		}
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("Enter the file name: ");
+		  		log.debug("Enter the file name: ");
 		  		String fileName = sc.nextLine();
 		  		Files.createFile(Paths.get(fileName));
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("Enter the file to write to:");
+		  		log.debug("Enter the file to write to:");
 		  		try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(sc.nextLine()),
 		  				StandardOpenOption.CREATE,
 		  				StandardOpenOption.APPEND)) {
 			  		while(true) {
-			  			System.out.println("Text to write to file: ");
+			  			log.debug("Text to write to file: ");
 			  			String input = sc.nextLine();
 			  			if (input.equals("exit")) break;
 			  			else bw.write(input + System.lineSeparator());
 			  		}
 		  		}
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("Enter file to read from:");
+		  		log.debug("Enter file to read from:");
 		  		List<String> lines = Files.readAllLines(Paths.get(sc.nextLine()));
-		  		System.out.println("TOTAL LINES: " + lines.size());
-		  		System.out.println("LINES WITH 'JAVA': " 
+		  		log.debug("TOTAL LINES: " + lines.size());
+		  		log.debug("LINES WITH 'JAVA': "
 		  		  + lines.stream().filter((l) -> l.contains("Java")).count());
 		  		lines.stream().forEachOrdered(System.out::println);
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("Source file:");
+		  		log.debug("Source file:");
 		  		String source = sc.nextLine();
-		  		System.out.println("Target file:");
+		  		log.debug("Target file:");
 		  		String target = sc.nextLine();
 		  		Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("File to move:");
+		  		log.debug("File to move:");
 		  		String file = sc.nextLine();
-		  		System.out.println("Where to move to:");
+		  		log.debug("Where to move to:");
 		  		Files.move(Paths.get(file), Paths.get(sc.nextLine()));
 		  	} else if (choice == ++choiceOpt) {
-		  		System.out.println("File to delete:");
+		  		log.debug("File to delete:");
 		  		String file = sc.nextLine();
 		  		Files.delete(Paths.get(file));
 		  	} else {
@@ -99,15 +103,15 @@ public class ManipulateFilesExample {
 		  }
 	  }
 	}
-	
+
 	private static int printMenu() {
-		System.out.println("1 - List contents of directory");
-		System.out.println("2 - Create new file");
-		System.out.println("3 - Write to file");
-		System.out.println("4 - Read a file");
-		System.out.println("5 - Copy a file");
-		System.out.println("6 - Move/rename a file");
-		System.out.println("7 - Delete a file or directory");
+		log.debug("1 - List contents of directory");
+		log.debug("2 - Create new file");
+		log.debug("3 - Write to file");
+		log.debug("4 - Read a file");
+		log.debug("5 - Copy a file");
+		log.debug("6 - Move/rename a file");
+		log.debug("7 - Delete a file or directory");
 		return Integer.parseInt(sc.nextLine());
 	}
 }

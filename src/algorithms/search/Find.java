@@ -1,26 +1,30 @@
 package algorithms.search;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Find {
+        static final Logger log = LogManager.getRootLogger();
 
 	public static void main(String[] args) {
 		int[] smlg = findSmallestAndLargest(new int[] {3, 10, 7, 30, 100, -6, 105, 17});
-		System.out.println("Small: " +smlg[0]+ ", Large: " + smlg[1]);
-		System.out.println("=======");
-		System.out.println(findMissing(new int[]{1, 5, 3, 2, 6, 7, 9, 8}));
-		System.out.println("=======");
+		log.debug("Small: " +smlg[0]+ ", Large: " + smlg[1]);
+		log.debug("=======");
+		log.debug(findMissing(new int[]{1, 5, 3, 2, 6, 7, 9, 8}));
+		log.debug("=======");
 		int[][] pairs = findPairs(new int[] {20, 10, 15, 30, 8, 5, -3, 33}, 35);
 		for (int[] pair : pairs) {
-			System.out.println("Pair: " + pair[0] + ", " + pair[1]);
+			log.debug("Pair: " + pair[0] + ", " + pair[1]);
 		}
-		System.out.println("=======");
+		log.debug("=======");
 		int[] solution = findPairs2(new int[] {1, 3, 7, 1}, new int[] {6, 5, 18, 4}, 24);
-		System.out.println("Pairs2: "+solution[0] + ", " + solution[1]);
+		log.debug("Pairs2: "+solution[0] + ", " + solution[1]);
 	}
-	
+
 	/**
 	 * Finds the missing number in an array of contiguous integers. The array parameter is
 	 * guaranteed to contain - when sorted - a sequential order of integers, with a single value missing
@@ -40,7 +44,7 @@ public class Find {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Finds any and all duplicate values in an array of integers. The array parameter is <strong>not</strong>
 	 * guaranteed to contain duplicates.
@@ -50,9 +54,9 @@ public class Find {
 	public static int[] findDuplicates(int[] arr) {
 		return new int[] {};
 	}
-	
+
 	/**
-	 * Takes an array of integers and returns the smallest/largest values 
+	 * Takes an array of integers and returns the smallest/largest values
 	 * @param arr
 	 * @return an array containing two elements: the smallest int, and the largest int
 	 */
@@ -66,7 +70,7 @@ public class Find {
 		}
 		return new int[] {smallest, largest};
 	}
-	
+
 	/**
 	 * Finds the <tt>nth</tt> largest element in an array of integers
 	 * @param arr
@@ -76,10 +80,10 @@ public class Find {
 		/* One approach would be to sort the array, and then retrieve the nth index - complexity: O(n*log(n)) for QuickSort
 		 * The alternative is QuickSelect, which will be O(n) on average, but O(n^2) in the worst case
 		 */
-		
+
 		return 0;
 	}
-	
+
 	/**
 	 * Finds all unique pairs of an integer array whose sum is equal to the second parameter
 	 * @param arr - guaranteed to be of size >= 2
@@ -98,7 +102,7 @@ public class Find {
 				if (x + y == sum) {
 					boolean add = true;
 					for (int[] pair : pairs) {
-						if (pair[0] == x || pair[1] == x) {add = false; break;} // prevent duplicates 
+						if (pair[0] == x || pair[1] == x) {add = false; break;} // prevent duplicates
 					}
 					if (add) { // add the pair to the array, resizing as needed
 						numPairs++;
@@ -110,9 +114,9 @@ public class Find {
 		}
 		return pairs;
 	}
-	
+
 	/**
-	 * From two array parameters, finds a pair of integers - one from each array - whose 
+	 * From two array parameters, finds a pair of integers - one from each array - whose
 	 * sum is <strong>closest</strong> to the sum passed in as the third parameter
 	 * @param arr1
 	 * @param arr2
@@ -122,7 +126,7 @@ public class Find {
 	public static int[] findPairs2(int[] arr1, int[] arr2, int sum) {
 		/* Approach: put the first array in a set, then loop through every element in the second array.
 		 * For each int, compute the match that would need to exist to make the sum. If it exists in the set, return the match.
-		 * Otherwise, continue. If no matches exist for the exact sum, continue checking for matches for sum + 1 and sum - 1 
+		 * Otherwise, continue. If no matches exist for the exact sum, continue checking for matches for sum + 1 and sum - 1
 		 * until a close match is found
 		 */
 		Set<Integer> s1 = new HashSet<>();// cheating (a little) by using a Set
@@ -139,14 +143,14 @@ public class Find {
 			offset++; // increase the distance from the correct sum each time
 		}
 	}
-	
+
 	/**
 	 * Same problems as findPairs2, but this implementation is optimized. Imagine a 2D array
-	 * consisting of arr1 on the x-axis and arr2 on the y-axis, each sorted ascending. Search is 
-	 * conducted from the upper right corner of the matrix, flowing down and to the left until the best 
-	 * pair is found. Each pair searched is stored, along with the absolute value of the difference from 
+	 * consisting of arr1 on the x-axis and arr2 on the y-axis, each sorted ascending. Search is
+	 * conducted from the upper right corner of the matrix, flowing down and to the left until the best
+	 * pair is found. Each pair searched is stored, along with the absolute value of the difference from
 	 * the target sum.
-	 * 
+	 *
 	 *   | x | x | x | x | x | x |
 	 * y |   |   |   |   |   | 1 | if 1 is less than the target sum, we search down
 	 * y |   |   |   |   | 3 | 2 | if 2 is greater than the target sum, we search left

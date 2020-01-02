@@ -10,8 +10,7 @@ import org.junit.Test;
 public class Fibonacci {
 	
 	/**
-	 * Returns the nth Fibonacci number in the Fibonacci sequence.
-	 * Uses a simple for loop.
+	 * Returns the nth Fibonacci number in the Fibonacci sequence iteratively.
 	 * For example, getNthFib(6) returns 8. 
 	 */
 	public static int getNthFib(int n) {
@@ -29,9 +28,7 @@ public class Fibonacci {
 	}
 	
 	/**
-	 * Returns the nth Fibonacci number in the Fibonacci sequence.
-	 * Uses a simple for loop.
-	 * For example, getNthFib(6) returns 8. 
+	 * BigDecimal implementation
 	 */
 	public static BigDecimal getNthFibBigDec(int n) {
 		if (n <= 2) return BigDecimal.ONE;
@@ -49,8 +46,6 @@ public class Fibonacci {
 	
 	/**
 	 * Returns the nth Fibonacci number, using recursion
-	 * @param n
-	 * @return
 	 */
 	public static int getNthFibRecurse(int n) {
 		if (n <= 2) return 1;
@@ -61,8 +56,23 @@ public class Fibonacci {
 	 * Returns the index of the given Fibonacci number
 	 */
 	public static int getFibIndex(BigDecimal fibNum) {
-		return 0;
-		// TODO: implement
+		if (fibNum.equals(BigDecimal.ONE)) {
+			return 1;
+		}
+		int i = 3;
+		BigDecimal first = BigDecimal.ONE;
+		BigDecimal second = BigDecimal.ONE;
+		while(true) {
+			BigDecimal tmp = second;
+			second = first.add(second);
+			first = tmp;
+			if (second.equals(fibNum)) {
+				return i;
+			} else if (second.compareTo(fibNum) > 0) {
+				throw new IllegalArgumentException("The parameter " + fibNum + " is not a fibonacci number");
+			}
+			i++;
+		}
 	}
 	
 	/**
@@ -104,6 +114,9 @@ public class Fibonacci {
 	
 	@Test
 	public void testFibIndex() {
-		fail("not completed");
+		BigDecimal fib7 = new BigDecimal(13);
+		assertEquals(7, getFibIndex(fib7));
+		BigDecimal fib30 = new BigDecimal(832040);
+		assertEquals(30, getFibIndex(fib30));
 	}
 }

@@ -1,5 +1,8 @@
 package ocp.io;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,7 +10,8 @@ import java.util.OptionalDouble;
 import java.util.stream.Stream;
 
 public class AnalyzeFile {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	public static final String SEARCH_FOR = "Java";
 	public static final String FILE = "README.md";
 
@@ -22,8 +26,8 @@ public class AnalyzeFile {
 				.average();
 		lines.close();
 		if (avg.isPresent()) {
-			System.out.println(String.format(
-					"In file %s lines that contains %s are on average %.2f characters long", 
+			log.debug(String.format(
+					"In file %s lines that contains %s are on average %.2f characters long",
 					FILE, SEARCH_FOR, avg.getAsDouble()));
 		}
 	}

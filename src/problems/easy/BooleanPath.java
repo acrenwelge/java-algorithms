@@ -1,5 +1,8 @@
 package problems.easy;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -14,11 +17,11 @@ import org.junit.Test;
 /**
  * This problem was asked by Google.
 
-You are given an M by N matrix consisting of booleans that represents a board. 
+You are given an M by N matrix consisting of booleans that represents a board.
 Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
 
-Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps 
-required to reach the end coordinate from the start. If there is no possible path, then return null. 
+Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps
+required to reach the end coordinate from the start. If there is no possible path, then return null.
 You can move up, left, down, and right. You cannot move through walls. You cannot wrap around the edges of the board.
 
 For example, given the following board:
@@ -27,59 +30,61 @@ For example, given the following board:
 [t, t, f, t],
 [f, f, f, f],
 [f, f, f, f]]
-and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps 
-required to reach the end is 7, since we would need to go through (1, 2) because there is 
+and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps
+required to reach the end is 7, since we would need to go through (1, 2) because there is
 a wall everywhere else on the second row.
  * @author Andrew
  *
  */
 public class BooleanPath {
+        static final Logger log = LogManager.getRootLogger();
+
 	class Coord {
 		int m;
 		int n;
 		boolean val = true; // default = true in case we're at the edge
-		
+
 		public Coord(int m, int n, boolean b) {
 			this.m = m;
 			this.n = n;
 			this.val = b;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
 			Coord c = (Coord) obj;
 			return m == c.m && n == c.n && val == c.val;
 		}
-		
+
 		@Override
 		public String toString() {
 			return String.format("[%d,%d] - %s", m, n, val);
 		}
 	}
-	
+
 	/*
 	 * Approach:
 	 *  - start at the start coordinate
 	 *  - look at tile in most direct direction of the end coordinate
 	 *    - if on a diagonal, choose at random (or order doesn't matter)
 	 *  - if possible, make a step in that direction
-	 *    - !!check that we haven't already gone to this coordinate!! (realized later) 
+	 *    - !!check that we haven't already gone to this coordinate!! (realized later)
 	 *  - otherwise, choose a different direction
 	 *  - if no directions are possible, go back
 	 *    - change current tile to true so that we know that path is not viable
 	 *  - if at initial tile and going back, return null
-	 *  
+	 *
 	 *  NOTE: currently incomplete - this is a naive solution that does not pass test case 2
-	 *  problem is that when backtracking, it may stumble upon a coordinate that 
+	 *  problem is that when backtracking, it may stumble upon a coordinate that
 	 *  can be reached a shorter way earlier on in the history
 	 *  TODO: detect such shorter paths and take it. note that may not work for test case 3 however
 	 */
 	public Integer findMinSteps(boolean[][] board, int[] startCoord, int[] endCoord) {
 		final Coord start = new Coord(startCoord[0], startCoord[1], false);
 		final Coord end = new Coord(endCoord[0], endCoord[1], false);
-		
+
 		Coord current = start;
-		Deque<Coord> history = new LinkedList<>(); 
+		Deque<Coord> history = new LinkedList<>();
 		OUTER: while (!current.equals(end)) {
 			printBoard(board, current, end);
 			Coord up = null;
@@ -125,13 +130,13 @@ public class BooleanPath {
 		}
 		return history.size();
 	}
-	
+
 	private double getDist(Coord c1, Coord c2) {
 		return Math.sqrt(Math.pow(c1.m - c2.m, 2) + Math.pow(c1.n-c2.n, 2)); // distance formula
 	}
-	
+
 	private void printBoard(boolean[][] board, Coord current, Coord end) {
-		System.out.println("==================");
+		log.debug("==================");
 		for (int i=0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				if (current.m == i && current.n == j) System.out.print("   x   ");
@@ -142,7 +147,7 @@ public class BooleanPath {
 		}
 		System.out.println("==================");
 	}
-	
+
 	@Test
 	public void defaultTest() {
 		boolean[][] testBoard = {
@@ -155,7 +160,7 @@ public class BooleanPath {
 		int[] end = {0,0};
 		assertEquals(new Integer(7), findMinSteps(testBoard, start, end));
 	}
-	
+
 	@Test
 	public void customTest() {
 		boolean[][] testBoard = {
@@ -168,7 +173,7 @@ public class BooleanPath {
 		int[] end = {0,0};
 		assertNull(findMinSteps(testBoard, start, end));
 	}
-	
+
 	@Test
 	public void customTest2() {
 		boolean[][] testBoard = {
@@ -181,7 +186,7 @@ public class BooleanPath {
 		int[] end = {0,3};
 		assertEquals(new Integer(6), findMinSteps(testBoard, start, end));
 	}
-	
+
 	@Test
 	public void customTest3() {
 		boolean[][] testBoard = {

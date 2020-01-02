@@ -1,5 +1,8 @@
 package ocp.concurrent;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -10,10 +13,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ExecutorExample {
+        static final Logger log = LogManager.getRootLogger();
 	static Runnable runMe = () -> {
-		System.out.println(Thread.currentThread().getName());
+		log.debug(Thread.currentThread().getName());
 	};
-	
+
 	static Callable<String> callMe = () -> {
 		return "maybe?";
 	};
@@ -22,18 +26,18 @@ public class ExecutorExample {
 	 * 3 main interfaces:
 	 * - Executor (simple replacement for launching threads manually)
 	 * - ExecutorService (for lifecycle methods of executor and task)
-	 * - ScheduledExecutorService (future/periodic execution) 
-	 * @throws ExecutionException 
-	 * @throws InterruptedException 
+	 * - ScheduledExecutorService (future/periodic execution)
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		simpleExecutorTypes();
 		Future<String> result = null;
 		result = executorServiceExample();
 		schedule();
-		if (result != null) System.out.println(result.get());
+		if (result != null) log.debug(result.get());
 	}
-	
+
 	public static void simpleExecutorTypes() {
 		Executor single = Executors.newSingleThreadExecutor();
 		Executor pool   = Executors.newCachedThreadPool();
@@ -44,7 +48,7 @@ public class ExecutorExample {
 		fixed.execute(runMe);
 		steal.execute(runMe);
 	}
-	
+
 	public static Future<String> executorServiceExample() throws InterruptedException, ExecutionException {
 		ExecutorService es = Executors.newCachedThreadPool();
 		// can now use .submit()
@@ -52,7 +56,7 @@ public class ExecutorExample {
 		Future<String> future = es.submit(callMe);
 		return future;
 	}
-	
+
 	public static void schedule() {
 		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 		scheduler.schedule(runMe, 5, TimeUnit.SECONDS);

@@ -1,34 +1,38 @@
 package datastructures.graph;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class Graph {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	Map<Node, List<Node>> adjNodes = new HashMap<>();
-	
+
 	public Graph() {}
-	
+
 	public Graph(int numNodes) {
 		for (int i=0; i<numNodes; i++) {
 			adjNodes.put(new Node(), new LinkedList<Node>());
 		}
 	}
-	
+
 	List<Node> getEdgesOfNode(Node n) {
 		return adjNodes.get(n);
 	}
-	
+
 	void addNode(Node n) {
 		adjNodes.putIfAbsent(n, new LinkedList<Node>());
 	}
-	
+
 	void removeNode(Node n) {
 		adjNodes.remove(n);
 	}
-	
+
 	void addEdge(int source, int dest) {
 		Node a = new Node(source);
 		Node b = new Node(dest);
@@ -37,7 +41,7 @@ public class Graph {
 			adjNodes.get(b).add(a);
 		}
 	}
-	
+
 	void removeEdge(int source, int dest) {
 		Node n1 = new Node(source);
 		Node n2 = new Node(dest);
@@ -46,14 +50,14 @@ public class Graph {
 		if (edgeN1 != null) edgeN1.remove(n2);
 		if (edgeN2 != null) edgeN2.remove(n1);
 	}
-	
-	void printGraph() { 
+
+	void printGraph() {
 		for (Map.Entry<Node, List<Node>> ln : adjNodes.entrySet()) {
 			StringBuilder sb = new StringBuilder("edges of node " + ln.getKey().getValue() + ": ");
 			for (Node innerNode : ln.getValue()) {
 				sb.append(innerNode.getValue() + ", ");
 			}
-			System.out.println(sb);
+			log.debug(sb);
 		}
 	}
 
@@ -86,5 +90,5 @@ public class Graph {
 	public String toString() {
 		return "Graph [adjNodes=" + adjNodes + "]";
 	}
-	
+
 }

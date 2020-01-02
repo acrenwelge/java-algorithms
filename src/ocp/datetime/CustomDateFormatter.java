@@ -1,15 +1,19 @@
 package ocp.datetime;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class CustomDateFormatter {
+        static final Logger log = LogManager.getRootLogger();
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
-			System.out.println("Enter a date format");
+			log.debug("Enter a date format");
 			String s = scan.nextLine();
 			if (s.equals("exit")) break;
 			DateTimeFormatter dtf = null;
@@ -20,7 +24,7 @@ public class CustomDateFormatter {
 				continue;
 			}
 			String formatted = LocalDateTime.now().format(dtf);
-			System.out.println(formatted);
+			log.debug(formatted);
 		}
 		scan.close();
 	}

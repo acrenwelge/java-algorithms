@@ -1,11 +1,14 @@
 package problems.medium;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Conway's Game of Life takes place on an infinite two-dimensional board of square cells. 
+ * Conway's Game of Life takes place on an infinite two-dimensional board of square cells.
  * Each cell is either dead or alive, and at each tick, the following rules apply:
 
 Any live cell with less than two live neighbours dies.
@@ -14,9 +17,9 @@ Any live cell with more than three live neighbours dies.
 Any dead cell with exactly three live neighbours becomes a live cell.
 A cell neighbours another cell if it is horizontally, vertically, or diagonally adjacent.
 
-Implement Conway's Game of Life. It should be able to be initialized with a starting list of 
-live cell coordinates and the number of steps it should run for. Once initialized, it 
-should print out the board state at each step. Since it's an infinite board, print out 
+Implement Conway's Game of Life. It should be able to be initialized with a starting list of
+live cell coordinates and the number of steps it should run for. Once initialized, it
+should print out the board state at each step. Since it's an infinite board, print out
 only the relevant coordinates, i.e. from the top-leftmost live cell to bottom-rightmost live cell.
 
 You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
@@ -24,15 +27,16 @@ You can represent a live cell with an asterisk (*) and a dead cell with a dot (.
  *
  */
 public class GameOfLife {
+        static final Logger log = LogManager.getRootLogger();
 	public static final int TIMEOUT = 200;
 	public static final boolean BENCHMARK = false;
 	public static final char ALIVE  = 'o';
 	public static final int DEAD    = '-';
-	
+
 	List<List<Boolean>> board = new ArrayList<>();
 	int ticks = 0;
 	int maxTicks;
-	
+
 	public GameOfLife(boolean[][] initBoard, int maxTicks) {
 		for (int i=0;i<initBoard.length;i++) {
 			List<Boolean> list = new ArrayList<>();
@@ -43,7 +47,7 @@ public class GameOfLife {
 		}
 		this.maxTicks = maxTicks;
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException {
 		boolean[][] init = { // interesting initial configuration
 				{true,false,true},
@@ -61,17 +65,17 @@ public class GameOfLife {
 				{true,false,true},
 				{false,true,false}
 		};
-		System.out.println("Starting new game...");
+		log.debug("Starting new game...");
 		Thread.sleep(2000);
 		new GameOfLife(glider, 10).start();
-		System.out.println("Starting new game...");
+		log.debug("Starting new game...");
 		Thread.sleep(5000);
 		new GameOfLife(exploder, 16).start();
-		System.out.println("Starting new game...");
+		log.debug("Starting new game...");
 		Thread.sleep(5000);
 		new GameOfLife(init, 100).start();
 	}
-	
+
 	/**
 	 * Starts the game!
 	 * @throws InterruptedException - if interrupted while waiting to print next board
@@ -82,12 +86,12 @@ public class GameOfLife {
 			long then = System.currentTimeMillis();
 			tick();
 			if (BENCHMARK) {
-				System.out.println("TIME TO TICK: " + (System.currentTimeMillis() - then));
+				log.debug("TIME TO TICK: " + (System.currentTimeMillis() - then));
 			}
 			Thread.sleep(TIMEOUT);
 		}
 	}
-	
+
 	/**
 	 * Waits for the specified time, then iterates through each position, updating and printing the board:
 	 * <ul>
@@ -99,7 +103,7 @@ public class GameOfLife {
 	 */
 	public void tick() {
 		ticks++;
-		System.out.println("TICK #"+ticks);
+		log.debug("TICK #"+ticks);
 		// check if we need to expand the board
 		List<Boolean> newTop = new ArrayList<>();
 		List<Boolean> newBottom = new ArrayList<>();
@@ -198,7 +202,7 @@ public class GameOfLife {
 		}
 		print();
 	}
-	
+
 	/**
 	 * Returns the number of neighbors of cell (i,j) that are alive
 	 */
@@ -219,7 +223,7 @@ public class GameOfLife {
 		list.removeIf(b -> b.equals(Boolean.FALSE));
 		return list.size();
 	}
-	
+
 	public void print() {
 		int rows = board.size();
 		for (int i=0; i<rows; i++) {

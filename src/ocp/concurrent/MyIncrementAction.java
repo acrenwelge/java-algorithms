@@ -1,14 +1,18 @@
 package ocp.concurrent;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.RecursiveAction;
 
 public class MyIncrementAction extends RecursiveAction {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	static final int MAX = 100;
 	int[] arr;
 	int low;
 	int high;
-	
+
 
 	@Override
 	protected void compute() {
@@ -23,19 +27,19 @@ public class MyIncrementAction extends RecursiveAction {
 			left.compute();
 		}
 	}
-	
+
 	public MyIncrementAction(int[] arr, int low, int high) {
 		this.arr = arr;
 		this.low = low;
 		this.high = high;
 	}
-	
+
 	public static void main(String[] args) {
 		int[] arr = new int[] {1,5,2,3,-5};
 		new MyIncrementAction(arr,0,arr.length).compute();
 		for (int i : arr) {
-			System.out.println(i);
+			log.debug(i);
 		}
 	}
-	
+
 }

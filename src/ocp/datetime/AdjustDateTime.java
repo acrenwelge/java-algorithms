@@ -1,5 +1,8 @@
 package ocp.datetime;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -9,7 +12,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdjustDateTime {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	static LocalDateTime ldt;
 	static Scanner sc = new Scanner(System.in);
 
@@ -21,7 +25,7 @@ public class AdjustDateTime {
 			System.out.println("Date & Time is now: " + ldt);
 		}
 	}
-	
+
 	private static void printMenu() {
 		System.out.println("Adjust the date / time:");
 		System.out.println("1 - Add / subtract years");
@@ -63,7 +67,7 @@ public class AdjustDateTime {
 		}
 		adjust(selection, amount);
 	}
-	
+
 	private static void adjust(ChronoField field, int amount) {
 		TemporalAmount adjust = Duration.ofSeconds(0);
 		if (field.equals(ChronoField.YEAR)) adjust = Period.ofYears(amount);

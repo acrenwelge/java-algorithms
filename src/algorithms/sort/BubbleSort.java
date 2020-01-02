@@ -1,18 +1,22 @@
 package algorithms.sort;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 
 public class BubbleSort {
+        static final Logger log = LogManager.getRootLogger();
 
 	public static void main(String[] args) {
 		int[] sorted = bubbleSortArray(new int[]{1, 9, 5, 3, 7, 11, 0});
 		for (int i : sorted) {
-			System.out.println(i);
+			log.debug(i);
 		}
 	}
-	
+
 	/**
 	 * Sorts an array using the <strong>bubble sort</strong> algorithm <br>
 	 * <strong>Complexity:</strong> O(n<sup>2</sup>)
@@ -33,7 +37,7 @@ public class BubbleSort {
 		}
 		return arr;
 	}
-	
+
 	@Test
 	public void testBubbleSortArray() {
 		int[] arr = {9, 5, 8, 0, 11, 4, 7};

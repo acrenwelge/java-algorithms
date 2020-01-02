@@ -1,5 +1,8 @@
 package problems.medium;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ Hint: The basic equation of a circle is x2 + y2 = r2.
  *
  */
 public class MonteCarloPi {
+        static final Logger log = LogManager.getRootLogger();
 
 	/*
 	 * Approach:
@@ -39,10 +43,10 @@ public class MonteCarloPi {
 		  .filter(p -> Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y, 2)) <= 1)
 		  .collect(Collectors.toList());
 		double ratio = ((double) inside.size()) / (double) allPoints.size();
-		System.out.println("Time to run: " + (System.currentTimeMillis() - t1) + "ms");
+		log.debug("Time to run: " + (System.currentTimeMillis() - t1) + "ms");
 		return ratio * 4;
 	}
-	
+
 	public double estimatePiFaster() {
 		long t1 = System.currentTimeMillis();
 		int numberOfPoints = 10_000_000;
@@ -57,25 +61,25 @@ public class MonteCarloPi {
 			}
 		}
 		double ratio = ((double) insidePoints.size()) / ((double) outsidePoints.size() + insidePoints.size());
-		System.out.println("Time to run: " + (System.currentTimeMillis() - t1) + "ms");
+		log.debug("Time to run: " + (System.currentTimeMillis() - t1) + "ms");
 		return ratio * 4;
 	}
-	
+
 	class RandomPoint {
 		double x;
 		double y;
-		
+
 		public RandomPoint() {
 			this.x = Math.random();
 			this.y = Math.random();
 		}
-		
+
 		@Override
 		public String toString() {
 			return "["+x+","+y+"]";
 		}
 	}
-	
+
 	@Test
 	public void testPiToThreeDecimalPrecision() {
 		final double PI = 3.1416;

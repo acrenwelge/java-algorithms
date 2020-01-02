@@ -1,9 +1,13 @@
 package ocp.concurrent;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.RecursiveTask;
 
 public class MySumTask extends RecursiveTask<Integer> {
-	
+        static final Logger log = LogManager.getRootLogger();
+
 	public static final int THRESHOLD = 3;
 	public int[] arr;
 	public int low;
@@ -24,17 +28,17 @@ public class MySumTask extends RecursiveTask<Integer> {
 			return left + right;
 		}
 	}
-	
+
 	MySumTask(int[] arr, int low, int high) {
 		this.arr = arr;
 		this.low = low;
 		this.high = high;
 	}
-	
+
 	public static void main(String[] args) {
 		int[] arr = new int[] {1,6,2,0,4};
 		Integer sum = new MySumTask(arr,0,5).compute();
-		System.out.println(sum);
+		log.debug(sum);
 	}
 
 }
