@@ -1,13 +1,12 @@
 package problems.medium;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import static org.junit.Assert.assertEquals;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
-/*
+/**
  * This problem was asked by Facebook.
 
 A builder is looking to build a row of N houses that can be of K different colors.
@@ -17,7 +16,7 @@ Given an N by K matrix where the nth row and kth column represents the cost
 to build the nth house with kth color, return the minimum cost which achieves this goal.
  */
 public class HouseCostMinimization {
-        static final Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getLogger(HouseCostMinimization.class);
 	/*
 	 * Approach: look at a sample matrix
 	 * ------k (color) ------
@@ -36,6 +35,8 @@ public class HouseCostMinimization {
 	 * - skip the picked index in the next row
 	 * *This is naive and incorrect, will not guarantee global minimum*
 	 * Also, runtime is O(nk)
+	 * 
+	 * 
 	 */
 	public static int findMinCost(int[][] matrix) {
 		log.debug("===================");
@@ -63,6 +64,52 @@ public class HouseCostMinimization {
 		return totCost;
 	}
 
+	/*
+	 * Online solution
+	 */
+	public static int minCostII(int[][] costs) {
+	    if(costs==null || costs.length==0) {
+	    		return 0;
+	    }
+	    int preMin=0;
+	    int preSecond=0;
+	    int preIndex=-1; 
+	 
+	    for(int i=0; i<costs.length; i++){
+	        int currMin=Integer.MAX_VALUE;
+	        int currSecond = Integer.MAX_VALUE;
+	        int currIndex = 0;
+	 
+	        for(int j=0; j<costs[0].length; j++){
+	            if(preIndex==j){
+	                costs[i][j] += preSecond;
+	            }else{
+	                costs[i][j] += preMin;
+	            }
+	 
+	            if(currMin>costs[i][j]){
+	                currSecond = currMin;
+	                currMin=costs[i][j];
+	                currIndex = j;
+	            } else if(currSecond>costs[i][j] ){
+	                currSecond = costs[i][j];
+	            }
+	        }
+	 
+	        preMin=currMin;
+	        preSecond=currSecond;
+	        preIndex =currIndex;
+	    }
+	 
+	    int result = Integer.MAX_VALUE;
+	    for(int j=0; j<costs[0].length; j++){
+	        if(result>costs[costs.length-1][j]){
+	            result = costs[costs.length-1][j];
+	        }
+	    }
+	    return result;
+	}
+	
 	@Test
 	public void myTest() {
 		// solution here is 6 (3+2+1) - houses are m[1][2], m[2][1], m[0][0]
@@ -76,7 +123,7 @@ public class HouseCostMinimization {
 	@Test
 	public void chooseGlobalMin() {
 		// solution here is 11 (9+1+1) - houses are m[1][2], m[2][1], m[0][0]
-		assertEquals(11, findMinCost(new int[][] {
+		assertEquals(11, minCostII(new int[][] {
 			{11, 5, 9}, // should pick 9
 			{8, 1, 8},  // should pick 1
 			{1, 9, 9}   // should pick 1
@@ -85,7 +132,7 @@ public class HouseCostMinimization {
 
 	@Test
 	public void noAdjacentColors() {
-		assertEquals(8, findMinCost(new int[][] {
+		assertEquals(8, minCostII(new int[][] {
 			{5, 1, 9},  // should pick 1
 			{5, 1, 9},  // should pick 5
 			{5, 2, 9}   // should pick 1

@@ -18,7 +18,7 @@ For example, given the query string de and the set of strings [dog, deer, deal],
 Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
 */
 public class Autocomplete {
-        static final Logger log = LogManager.getRootLogger();
+  static final Logger log = LogManager.getRootLogger();
 
   public String[] autocomplete(String query, Set<String> possibilities) {
     Set<String> solutionSet = new HashSet<>();
@@ -31,12 +31,24 @@ public class Autocomplete {
 
   @Test
   public void defaultTest() {
-    String query = "";
+    String query = "de";
     Set<String> set = new HashSet<>();
-    set.add("");
-    set.add("");
-    set.add("");
-    assertArrayEquals(new String[] {"",""}, autocomplete(query, set));
+    set.add("dog");
+    set.add("deer");
+    set.add("deal");
+    assertArrayEquals(new String[] {"deer","deal"}, autocomplete(query, set));
+  }
+  
+  @Test
+  public void customTest() {
+    String query = "ja";
+    Set<String> set = new HashSet<>();
+    set.add("java");
+    set.add("green");
+    set.add("japan");
+    set.add("jack");
+    set.add("jerk");
+    assertArrayEquals(new String[] {"java","japan","jack"}, autocomplete(query, set));
   }
 
 }

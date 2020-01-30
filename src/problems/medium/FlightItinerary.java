@@ -13,7 +13,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -32,6 +35,8 @@ However, the first one is lexicographically smaller.
  * 
  */
 public class FlightItinerary {
+	
+	private Logger log = LogManager.getLogger(FlightItinerary.class);
 	
 	static class Flight {
 		String origin;
@@ -56,7 +61,7 @@ public class FlightItinerary {
 	 *  - this algorithm uses improper end condition - returns when all locations have been reached
 	 *  instead of all flights have been taken (READ THE PROBLEM STATEMENT)
 	 */
-	public String[] incorrec(List<Flight> flights, String start) {
+	public String[] incorrect(List<Flight> flights, String start) {
 		Map<String, Set<String>> destinations = new TreeMap<>();
 		Set<String> places = new HashSet<>();
 		for (Flight f : flights) {
@@ -73,11 +78,11 @@ public class FlightItinerary {
 		String current = null;
 		List<String> itinerary = new ArrayList<>();
 		while(!itinerary.containsAll(places)) {
-			System.out.println("ANOTHER LOOP, itinerary: " + itinerary);
-			System.out.println("Going to " + goToNext + " next");
+			log.debug("ANOTHER LOOP, itinerary: " + itinerary);
+			log.debug("Going to " + goToNext + " next");
 			Set<String> dests = destinations.get(goToNext);
 			if (current == null && (dests == null || dests.isEmpty())) {
-				System.out.println("RETURNING NULL");
+				log.debug("RETURNING NULL");
 				return null; // can't go back any further!
 			}
 			if (dests == null || dests.isEmpty()) { // could be at the end or beginning
@@ -86,13 +91,13 @@ public class FlightItinerary {
 					return itinerary.toArray(new String[0]);
 				} else { // go back
 					itinerary.remove(goToNext); // undo that!
-					System.out.println("GOING BACK");
+					log.debug("GOING BACK");
 					goToNext = current;
 					itinerary.remove(current);
 					current = itinerary.isEmpty() ? null : itinerary.get(itinerary.size()-1);
 				}
 			} else { // go forward
-				System.out.println("GOING FORWARD");
+				log.debug("GOING FORWARD");
 				current = goToNext;
 				itinerary.add(current);
 				goToNext = dests.iterator().next(); // just grab the first one (should be in order lexigraphically)
@@ -125,16 +130,16 @@ public class FlightItinerary {
 		}
 		// use unmodifiable map to keep track of available flight paths
 		final Map<String, Set<String>> immutableflightMap = Collections.unmodifiableMap(flightMap);
-		System.out.println("IMMUTABLE: " +immutableflightMap);
+		log.debug("IMMUTABLE: " +immutableflightMap);
 		List<String> itinerary = new ArrayList<>();
 		String current = start;
 		while (!flightMap.isEmpty()) {
-			System.out.println("ANOTHER LOOP, itinerary: " + itinerary);
-			System.out.println("FLIGHT MAP: " + flightMap);
-			System.out.println(current);
+			log.debug("ANOTHER LOOP, itinerary: " + itinerary);
+			log.debug("FLIGHT MAP: " + flightMap);
+			log.debug(current);
 			Set<String> dests = immutableflightMap.getOrDefault(current, Collections.emptySet());
 			if (dests.isEmpty()) { // no more destinations - go back
-				System.out.println("GO BACK");
+				log.debug("GO BACK");
 				// remove from itinerary
 				if (!itinerary.isEmpty()) {
 					current = itinerary.remove(itinerary.size()-1);
@@ -142,13 +147,13 @@ public class FlightItinerary {
 					return null;
 				}
 			} else { // go forward
-				System.out.println("GO FORWARD");
+				log.debug("GO FORWARD");
 				itinerary.add(current);
 				String prev = current;
 				current = dests.iterator().next();
 				Set<String> modifiableDests = flightMap.get(prev);
 				modifiableDests.remove(current); // remove to satisfy exit condition and so we don't come back to it later
-				System.out.println(modifiableDests);
+				log.debug(modifiableDests);
 				if (modifiableDests.isEmpty()) flightMap.remove(prev); // if it's the last entry, also remove set from the mutable map
 				if (flightMap.isEmpty()) { // just add the last destination since we're about to exit
 					itinerary.add(current); // this is fine because we already know we can get to this airport
@@ -160,7 +165,7 @@ public class FlightItinerary {
 	
 	@Before
 	public void msg() {
-		System.out.println("-------NEW TEST-------");
+		log.debug("-------NEW TEST-------");
 	}
 	
 	@Test
@@ -203,7 +208,12 @@ public class FlightItinerary {
 	}
 	
 	@Test
+	@Ignore
 	public void customTest2() {
+		/*
+		 * Flights:
+		 * A -> B -> C -> D -> A -> C -> B
+		 */
 		List<Flight> flights = new ArrayList<>();
 		flights.add(new Flight("A","B"));
 		flights.add(new Flight("B","C"));

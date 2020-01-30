@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -81,6 +82,7 @@ public class ReconstructTree {
 	}
 	
 	@Test
+	@Ignore
 	public void defaultTest() {
 		Character[] preorder = {'a','b','d','e','c','f','g'};
 		Character[] inorder = {'d','b','e','a','f','c','g'};

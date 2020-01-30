@@ -1,6 +1,7 @@
 package problems.hard;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -18,8 +19,43 @@ There are no transaction costs and you can trade fractional quantities.
  */
 public class Arbitrage {
 	
+	private static boolean determineArbitrage(double[][] exchangeRates) {
+		int size = exchangeRates.length;
+		for (int i=0; i < size; i++) {
+			for (int j=0; j < size; j++) {
+				if (exchangeRates[i][j] != exchangeRates[j][i]) return true;
+			}
+		}
+		return false;
+	}
+	
 	@Test
-	public void simpleTest() {
-		fail("not complete");
+	public void checkNotSymmetric() {
+		/*      USD  |  CAN  
+		 * USD   1   |  1.2 
+		 * CAN  0.9  |   1  
+		 * 
+		 * If the table is not symmetric then arbitrage is possible
+		 */
+		double[][] table = new double[][] {
+			{1,1.2},
+			{0.9,1}
+		};
+		assertTrue(determineArbitrage(table));
+	}
+	
+	@Test
+	public void checkIsSymmetric() {
+		/*      USD  |  CAN  
+		 * USD   1   |  1.2 
+		 * CAN  1.2  |   1  
+		 * 
+		 * If the table is not symmetric then arbitrage is possible
+		 */
+		double[][] table = new double[][] {
+			{1,1.2},
+			{1.2,1}
+		};
+		assertFalse(determineArbitrage(table));
 	}
 }

@@ -2,6 +2,8 @@ package problems.easy;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 /**
@@ -18,6 +20,8 @@ Each method should run in constant time.
  */
 @SuppressWarnings("unchecked")
 public class Stack<T> {
+	static final Logger log = LogManager.getLogger(Stack.class);
+	
 	private T[] contents;
 	
 	public Stack() {
@@ -59,11 +63,11 @@ public class Stack<T> {
 		strStack.push("Hi");
 		strStack.push("Hello");
 		strStack.push("Goodbye");
-		System.out.println(strStack.max());
-		System.out.println(strStack.pop());
-		System.out.println(strStack.pop());
-		System.out.println(strStack.pop());
-		System.out.println(strStack.pop());
+		log.debug(strStack.max());
+		log.debug(strStack.pop());
+		log.debug(strStack.pop());
+		log.debug(strStack.pop());
+		log.debug(strStack.pop());
 	}
 	
 	@Test

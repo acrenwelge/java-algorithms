@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -24,7 +25,17 @@ Each operation should run in O(1) time.
  * @author Andrew
  *
  */
+@Ignore
 public class LRUCache<K,V> {
+	public static void main(String[] args) {
+		LRUCache<String, String> localCache = new LRUCache<>(3);
+		localCache.set("Andrew", "Developer");
+		localCache.set("Nicole", "Pricing Analyst");
+		localCache.set("Karan", "Manager");
+		localCache.set("Seth", "Student");
+		assertEquals("Pricing Analyst", localCache.get("Nicole"));
+		assertNull(localCache.get("Andrew"));
+	}
 	
 	static final Logger log = LogManager.getRootLogger();
 	
@@ -33,8 +44,7 @@ public class LRUCache<K,V> {
 		Instant lastUsed;
 		
 		public MetaValue(V val) {
-			this.val = val;
-			this.lastUsed = Instant.now();
+			this(val, Instant.now());
 		}
 		
 		public MetaValue(V val, Instant i) {

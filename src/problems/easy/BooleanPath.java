@@ -1,8 +1,5 @@
 package problems.easy;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -12,6 +9,9 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,8 +36,9 @@ a wall everywhere else on the second row.
  * @author Andrew
  *
  */
+@Ignore
 public class BooleanPath {
-        static final Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getLogger(BooleanPath.class);
 
 	class Coord {
 		int m;
@@ -138,16 +139,34 @@ public class BooleanPath {
 	private void printBoard(boolean[][] board, Coord current, Coord end) {
 		log.debug("==================");
 		for (int i=0; i < board.length; i++) {
+			StringBuilder line = new StringBuilder();
 			for (int j = 0; j < board[i].length; j++) {
-				if (current.m == i && current.n == j) System.out.print("   x   ");
-				else if (end.m == i && end.n == j) System.out.print("  end  ");
-				else System.out.print(String.format("%7s", board[i][j]));
+				if (current.m == i && current.n == j) line.append("   x   ");
+				else if (end.m == i && end.n == j) line.append("  end  ");
+				else line.append(String.format("%7s", board[i][j]));
 			}
-			System.out.println(String.format("%n"));
+			log.debug(line.toString());
+			log.debug(String.format("%n"));
 		}
-		System.out.println("==================");
+		log.debug("==================");
 	}
 
+	public int findMinSteps(boolean[][] board, Coord start, Coord end) {
+		boolean[][] visited = new boolean[board.length][board[0].length];
+		return 0;
+	}
+	
+	@Test
+	public void newTest() {
+		boolean[][] testBoard = {
+				{false, false, false, false},
+				{true,  true,  false, true},
+				{false, false, false, false},
+				{false, false, false, false}
+				};
+		assertEquals(7, findMinSteps(testBoard, new Coord(3,0,false), new Coord(0,0,false)));
+	}
+	
 	@Test
 	public void defaultTest() {
 		boolean[][] testBoard = {

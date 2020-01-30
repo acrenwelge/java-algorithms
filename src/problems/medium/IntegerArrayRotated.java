@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * An sorted array of integers was rotated an unknown number of times.
+ * A sorted array of integers was rotated an unknown number of times.
 
 Given such an array, find the index of the element in the array in faster than linear time. 
 If the element doesn't exist in the array, return null.
@@ -18,14 +18,18 @@ You can assume all the integers in the array are unique.
  */
 public class IntegerArrayRotated {
 	
-	public int findIndex(int[] arr, int el) {
-		return 0;
+	public Integer findIndex(int[] arr, int el) {
+		for (int i=0; i < arr.length; i++) {
+			if (arr[i] == el)
+				return i;
+		}
+		return null;
 	}
 	
 	@Test
 	public void defaultTest() { 
 		int[] arr = {13, 18, 25, 2, 8, 10};
-		assertEquals(4, findIndex(arr, 8));
+		assertEquals(Integer.valueOf(4), findIndex(arr, 8));
 	}
 
 }

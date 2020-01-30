@@ -1,11 +1,11 @@
 package problems.medium;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * Conway's Game of Life takes place on an infinite two-dimensional board of square cells.
@@ -27,7 +27,7 @@ You can represent a live cell with an asterisk (*) and a dead cell with a dot (.
  *
  */
 public class GameOfLife {
-        static final Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getLogger(GameOfLife.class);
 	public static final int TIMEOUT = 200;
 	public static final boolean BENCHMARK = false;
 	public static final char ALIVE  = 'o';
@@ -228,11 +228,13 @@ public class GameOfLife {
 		int rows = board.size();
 		for (int i=0; i<rows; i++) {
 			int columns = board.get(i).size();
+			StringBuilder chars = new StringBuilder();
 			for (int j=0; j<columns; j++) {
 				char s = board.get(i).get(j) ? ALIVE : DEAD;
-				System.out.print(s);
+				chars.append(s);
 			}
-			System.out.println();
+			log.debug(chars.toString());
+			log.debug("");
 		}
 	}
 }

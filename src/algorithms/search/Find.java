@@ -1,14 +1,17 @@
 package algorithms.search;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 public class Find {
-        static final Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getRootLogger();
 
 	public static void main(String[] args) {
 		int[] smlg = findSmallestAndLargest(new int[] {3, 10, 7, 30, 100, -6, 105, 17});
@@ -41,6 +44,7 @@ public class Find {
 			if (b != a + 1) {
 				return a + 1;
 			}
+			a = b;
 		}
 		return 0;
 	}
@@ -52,7 +56,15 @@ public class Find {
 	 * @return an array containing the duplicate(s). If there are no duplicates, the array should be empty
 	 */
 	public static int[] findDuplicates(int[] arr) {
-		return new int[] {};
+		Set<Integer> unique = new HashSet<>();
+		List<Integer> dups = new ArrayList<>();
+		for (int i : arr) {
+			if (unique.contains(i)) {
+				dups.add(i);
+			}
+			unique.add(i);
+		}
+		return dups.stream().mapToInt(i -> (int) i).toArray();
 	}
 
 	/**
@@ -80,8 +92,11 @@ public class Find {
 		/* One approach would be to sort the array, and then retrieve the nth index - complexity: O(n*log(n)) for QuickSort
 		 * The alternative is QuickSelect, which will be O(n) on average, but O(n^2) in the worst case
 		 */
-
-		return 0;
+		if (n > arr.length) {
+			throw new IllegalArgumentException("index must not be greater than the size of the array");
+		}
+		Arrays.sort(arr);
+		return arr[arr.length - n];
 	}
 
 	/**
@@ -116,7 +131,7 @@ public class Find {
 	}
 
 	/**
-	 * From two array parameters, finds a pair of integers - one from each array - whose
+	 * From two array parameters, finds a pair of integ)ers - one from each array - whose
 	 * sum is <strong>closest</strong> to the sum passed in as the third parameter
 	 * @param arr1
 	 * @param arr2

@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 /**
@@ -19,6 +21,8 @@ implement a function rand7() that returns an integer from 1 to 7 (inclusive).
  * @author Andrew
  */
 public class Rand7 {
+	static final Logger log = LogManager.getLogger(Rand7.class);
+	
 	static final int SIMULATION_SIZE=1000;
 	static final double ACCEPT_RANGE=0.15;
 	
@@ -64,7 +68,7 @@ public class Rand7 {
 			nums.add(rand5());
 		}
 		Map<Integer,Long> counts = nums.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
-		System.out.println(counts);
+		log.debug(counts);
 		if (counts.size() != 5) fail("Not generating all 5 integers");
 		for(Map.Entry<Integer, Long> entry : counts.entrySet()) {
 			if (entry.getKey() < 1 || entry.getKey() > 5) {
@@ -72,7 +76,8 @@ public class Rand7 {
 			}
 			if (entry.getValue() < (1-ACCEPT_RANGE)*SIMULATION_SIZE/5 || 
 				entry.getValue() > (1+ACCEPT_RANGE)*SIMULATION_SIZE/5) {
-				fail("count of random numbers failed to be within 10% of statistical likelihood");
+				fail(String.format("count of random numbers failed to be within %2.0f%% of statistical likelihood",
+						ACCEPT_RANGE*100));
 			}
 		}
 	}
@@ -85,7 +90,7 @@ public class Rand7 {
 			nums.add(rand7());
 		}
 		Map<Integer,Long> counts = nums.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
-		System.out.println(counts);
+		log.debug(counts);
 		if (counts.size() != 7) fail("Not generating all 7 integers");
 		for(Map.Entry<Integer, Long> entry : counts.entrySet()) {
 			if (entry.getKey() < 1 || entry.getKey() > 7) {
@@ -93,7 +98,8 @@ public class Rand7 {
 			}
 			if (entry.getValue() < (1-ACCEPT_RANGE)*SIMULATION_SIZE/7 || 
 				entry.getValue() > (1+ACCEPT_RANGE)*SIMULATION_SIZE/7) {
-				fail("count of random numbers failed to be within 10% of statistical likelihood");
+				fail(String.format("count of random numbers failed to be within %2.0f%% of statistical likelihood",
+						ACCEPT_RANGE*100));
 			}
 		}
 	}

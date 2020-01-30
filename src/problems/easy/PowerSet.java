@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,95 +22,99 @@ You may also use a list or array to represent a set.
  * @author Andrew
  *
  */
+@Ignore
 public class PowerSet {
 	
-	public Set<List<Integer>> getPowerset(Set<Integer> set) {
-		Set<List<Integer>> powerset = new HashSet<>();
-		powerset.add(new ArrayList<>());
-		List<Integer> all = new ArrayList<>(); // subset that will contain all elements in set 
-		for (Integer i : set) {
-			all.add(i);
-			powerset.add(Arrays.asList(i)); // add the subset which is the single element
-			List<Integer> subset = new ArrayList<>(); // subset which will contain all elements except the current
-			for (Integer j : set) {
-				if (!i.equals(j)) {
-					subset.add(j);
-				}
-			}
-			powerset.add(subset);
-		}
-		powerset.add(all);
-		List<Integer> list = new ArrayList<>();
-		list.addAll(set);
-		powerset.add(list);
+	private Set<List<Integer>> powerset = new HashSet<>();
+	
+	/*
+	 * Approach:
+	 * - iterate through the set
+	 * - we can choose to include the number or not
+	 * - generate the remaining subsets for each case
+	 * 
+	 * - generate 2^n Arrays of Booleans
+	 */
+	public Set<List<Integer>> getPowerset(int[] origSet) {
+		List<Integer> subset = new ArrayList<>(origSet.length);
+		helper(origSet, subset, 0);
+		powerset.forEach(l -> l.removeIf(i -> i == null));
 		return powerset;
 	}
 	
-	@Test
-	public void defaultTest() {
-		Set<Integer> set = new HashSet<>();
-		set.add(1);
-		set.add(2);
-		set.add(3);
-		Set<List<Integer>> powerset = new HashSet<>();
-		List<Integer> list = new ArrayList<>();
-		powerset.add(list);
-		list = Arrays.asList(1);
-		powerset.add(list);
-		list = Arrays.asList(2);
-		powerset.add(list);
-		list = Arrays.asList(3);
-		powerset.add(list);
-		list = Arrays.asList(1,2);
-		powerset.add(list);
-		list = Arrays.asList(1,3);
-		powerset.add(list);
-		list = Arrays.asList(2,3);
-		powerset.add(list);
-		list = Arrays.asList(1,2,3);
-		powerset.add(list);
-		
-		assertEquals(powerset, getPowerset(set));
+	private void helper(int[] origSet, List<Integer> subset, int idx) {
+		if (idx == origSet.length) {
+			powerset.add(subset);
+		} else if (idx < subset.size()) {
+			subset.set(idx, null);
+			helper(origSet, subset, idx+1);
+			subset.set(idx, origSet[idx]);
+			helper(origSet, subset, idx+1);
+		}
 	}
 	
 	@Test
-	public void customTest() {
-		Set<Integer> set = new HashSet<>();
-		set.add(1);
-		set.add(2);
-		set.add(3);
-		set.add(4);
-		Set<List<Integer>> powerset = new HashSet<>();
+	public void defaultPowersetTest() {
+		Set<List<Integer>> expected = new HashSet<>();
 		List<Integer> list = new ArrayList<>();
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(1);
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(2);
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(3);
-		powerset.add(list);
-		list = Arrays.asList(4);
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(1,2);
-		powerset.add(list);
-		list = Arrays.asList(1,2,3);
-		powerset.add(list);
-		list = Arrays.asList(1,2,3,4);
-		powerset.add(list);
-		list = Arrays.asList(2,3,4);
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(1,3);
-		powerset.add(list);
+		expected.add(list);
 		list = Arrays.asList(2,3);
-		powerset.add(list);
-		list = Arrays.asList(1,2,3,4);
-		powerset.add(list);
-		list = Arrays.asList(1,3,4);
-		powerset.add(list);
-		list = Arrays.asList(1,2,4);
-		powerset.add(list);
+		expected.add(list);
+		list = Arrays.asList(1,2,3);
+		expected.add(list);
 		
-		assertEquals(powerset, getPowerset(set));
+		assertEquals(expected, getPowerset(new int[] {1,2,3}));
+	}
+	
+	@Test
+	public void customPowersetTest() {
+		Set<List<Integer>> expected = new HashSet<>();
+		List<Integer> list = new ArrayList<>();
+		expected.add(list);
+		list = Arrays.asList(1);
+		expected.add(list);
+		list = Arrays.asList(2);
+		expected.add(list);
+		list = Arrays.asList(3);
+		expected.add(list);
+		list = Arrays.asList(4);
+		expected.add(list);
+		list = Arrays.asList(1,2);
+		expected.add(list);
+		list = Arrays.asList(1,2,3);
+		expected.add(list);
+		list = Arrays.asList(1,2,3,4);
+		expected.add(list);
+		list = Arrays.asList(2,3,4);
+		expected.add(list);
+		list = Arrays.asList(1,3);
+		expected.add(list);
+		list = Arrays.asList(1,4);
+		expected.add(list);
+		list = Arrays.asList(2,3);
+		expected.add(list);
+		list = Arrays.asList(2,4);
+		expected.add(list);
+		list = Arrays.asList(3,4);
+		expected.add(list);
+		list = Arrays.asList(1,2,3,4);
+		expected.add(list);
+		list = Arrays.asList(1,3,4);
+		expected.add(list);
+		list = Arrays.asList(1,2,4);
+		expected.add(list);
+		
+		assertEquals(expected, getPowerset(new int[] {1,2,3,4}));
 	}
 
 }
