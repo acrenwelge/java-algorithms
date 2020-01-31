@@ -25,6 +25,7 @@
 	</dependencies>
 
 	<build>
+                <finalName>java-algorithms</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>src</testSourceDirectory>
 		<plugins>
