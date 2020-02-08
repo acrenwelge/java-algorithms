@@ -27,9 +27,9 @@ public class RemoveKthElementFromList {
 	 *  - keep the kth most recent values in an array
 	 *  - when end of list is reached, remove the initial element in the array
 	 */
-	public void removeKth(LinkedList l, int k) {
+	public void removeKth(LinkedList<Integer> l, int k) {
 		int idx = -1;
-		Iterator i = l.iterator();
+		Iterator<Integer> i = l.iterator();
 		while (i.hasNext()) {
 			i.next();
 			idx++;

@@ -36,8 +36,8 @@ public class QueenArrangement2 {
 	public int getNumArrangements(int n) {
 		this.board = new boolean[n][n];
 		currSolution = new int[board.length];
-		ROWS: for (int row=0; row < board.length; row++) {
-			COLUMNS: for (int col=0; col < board.length; col++) {
+		for (int row=0; row < board.length; row++) {
+			for (int col=0; col < board.length; col++) {
 				System.out.println("ROW:"+row+";COL:"+col);
 				if (!underAttack(row,col)) {
 					System.out.println("R"+row+"C"+col+" NOT UNDER ATTACK");

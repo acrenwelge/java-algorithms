@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import java.util.concurrent.RecursiveTask;
 
 public class MySumTask extends RecursiveTask<Integer> {
-        static final Logger log = LogManager.getRootLogger();
+	private static final long serialVersionUID = 1L;
+
+	static final Logger log = LogManager.getRootLogger();
 
 	public static final int THRESHOLD = 3;
 	public int[] arr;

@@ -44,7 +44,6 @@ public class LongestConsecutiveElements {
 		}
 		int longest = 0;
 		for (int j : arr) {
-			System.out.println(j);
 			int val = j+1;
 			int iter = 1;
 			if (!all.contains(j-1)) {

@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -31,8 +30,8 @@ public class LinkedListMerge {
 	 * When an iterator has no more values to give us, we replace the value with null.
 	 * We terminate looping once all values in the list of "current" values are null.
 	 */
+	@SafeVarargs
 	public static <E extends Comparable<E>> List<Comparable<E>> merge(LinkedList<E> ...all) {
-		// log.setLevel(Level.DEBUG);
 		int k = all.length;
 		List<Iterator<E>> iterators = new ArrayList<>(k);
 		List<E> currVals = new ArrayList<>(k);

@@ -152,7 +152,6 @@ public class BooleanPath {
 	}
 
 	public int findMinSteps(boolean[][] board, Coord start, Coord end) {
-		boolean[][] visited = new boolean[board.length][board[0].length];
 		return 0;
 	}
 	

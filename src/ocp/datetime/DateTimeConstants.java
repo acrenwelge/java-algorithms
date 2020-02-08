@@ -20,7 +20,8 @@ public class DateTimeConstants {
 				ChronoField.DAY_OF_WEEK, ChronoField.DAY_OF_MONTH, ChronoField.MONTH_OF_YEAR,
 				ChronoField.YEAR
 		};
-
+		System.out.println(units);
+		System.out.println(fields);
 	}
 
 }

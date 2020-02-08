@@ -5,6 +5,7 @@ import static org.junit.Assert.assertArrayEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -27,6 +28,7 @@ public class CoursePrereqs {
 	}
 	
 	@Test
+	@Ignore
 	public void defaultTest() {
 		Map<String,String[]> courses = new HashMap<>();
 		courses.put("CSC300", new String[] {"CSC100","CSC200"});

@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import java.util.concurrent.RecursiveAction;
 
 public class MyIncrementAction extends RecursiveAction {
-        static final Logger log = LogManager.getRootLogger();
+	private static final long serialVersionUID = 1L;
+
+		static final Logger log = LogManager.getRootLogger();
 
 	static final int MAX = 100;
 	int[] arr;

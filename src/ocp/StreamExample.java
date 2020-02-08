@@ -1,12 +1,11 @@
 package ocp;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
-import java.util.function.UnaryOperator;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class StreamExample {
         static final Logger log = LogManager.getRootLogger();
@@ -28,8 +27,6 @@ public class StreamExample {
         DoubleStream ds = DoubleStream.of(0,1,2,3,4,5);
         double dsum = ds.sum();
         log.debug(isum + dsum);
-        Stream<Integer> ints = Stream.of(1,4,2);
-        UnaryOperator<Double> dop;
 	}
 
 }

@@ -121,7 +121,6 @@ public class ReturnSubset {
 	public static List<Integer> findSubset2(int[] arr, int k) {
 		boolean hasAny = hasSubsetSum(arr,k);
 		List<Integer> subset = new ArrayList<>();
-		int i = arr.length;
 		if (!hasAny) {
 			return null;
 		} else {

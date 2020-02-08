@@ -16,7 +16,7 @@ Write a function to simulate an unbiased coin toss.
  */
 public class TossBiased {
 	public static final int PRECISION = 1000; // the higher this is, the more accurate the simulated unbiased coin toss 
-	public static final int SAMPLE_SIZE = 10; // similarly, the larger this sample, the more accurate the method becomes (Law of Large Numbers)
+	public static final int SAMPLE_SIZE = 1000; // similarly, the larger this sample, the more accurate the method becomes (Law of Large Numbers)
 	public static final double RANDOM_BIAS = Math.random(); // different random bias every time the class is loaded
 	
 	// how far (percentage-wise) the method can be outside the 50-50 range and still pass the test

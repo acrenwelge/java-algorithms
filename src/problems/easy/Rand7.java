@@ -23,7 +23,7 @@ implement a function rand7() that returns an integer from 1 to 7 (inclusive).
 public class Rand7 {
 	static final Logger log = LogManager.getLogger(Rand7.class);
 	
-	static final int SIMULATION_SIZE=1000;
+	static final int SIMULATION_SIZE=10000;
 	static final double ACCEPT_RANGE=0.15;
 	
 	static final Random r = new Random(); // reuse the Random (not doing so is code smell)

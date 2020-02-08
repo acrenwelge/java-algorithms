@@ -34,6 +34,7 @@ public class Queue<E> {
 		tail--;
 	}
 	
+	@SuppressWarnings("unchecked") // no way to avoid using Object[] because generic arrays not permitted
 	public E dequeue() {
 		return (E) elements[head--];
 	}
