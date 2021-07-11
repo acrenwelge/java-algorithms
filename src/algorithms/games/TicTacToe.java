@@ -1,7 +1,7 @@
 package algorithms.games;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The Tic-Tac-Toe game board is represented here by a 2D array of bytes,
