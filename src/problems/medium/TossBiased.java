@@ -12,7 +12,6 @@ probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the 
 
 Write a function to simulate an unbiased coin toss.
  * @author Andrew
- *
  */
 public class TossBiased {
 	public static final int PRECISION = 1000; // the higher this is, the more accurate the simulated unbiased coin toss 
