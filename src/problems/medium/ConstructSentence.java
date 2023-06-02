@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,8 +62,6 @@ public class ConstructSentence {
 		Set<String> dict = new HashSet<>();
 		List<String> orig = Arrays.asList("bed","bath","bedbath","and","beyond"); 
 		dict.addAll(orig);
-		assertThat(constructSentence(dict, "bedbathandbeyond"), 
-				anyOf(equalTo(Arrays.asList("bed","bath","and","beyond")), 
-				equalTo(Arrays.asList("bedbath","and","beyond"))));
+		assertEquals(Arrays.asList("bed","bath","and","beyond"), constructSentence(dict, "bedbathandbeyond"));
 	}
 }

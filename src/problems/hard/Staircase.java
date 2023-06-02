@@ -78,11 +78,6 @@ public class Staircase {
 		return count;
 	}
 	
-	private int fasterGeneralSolution(int n, Set<Integer> x) {
-		// TODO: implement iterative approach
-		return 0;
-	}
-
 	@Test
 	public void defaultTest() {
 		assertEquals(5, traverseStaircase(4));
